@@ -53,6 +53,8 @@ function startTimer() {
 
 function stopTimer() {
   running.value = false;
+  phase.value = 0;
+  countdown.value = props.coldDuration;
   if (intervalId) {
     clearInterval(intervalId);
     intervalId = null;
@@ -61,9 +63,9 @@ function stopTimer() {
 </script>
 
 <template>
-  <div class="grid gap-4 rounded-lg border p-8">
+  <div class="grid gap-8 rounded-lg border p-12 shadow">
     <div
-      class="text-center text-4xl font-semibold capitalize transition-colors"
+      class="text-center text-6xl font-semibold capitalize transition-opacity duration-500"
       :class="{
         'text-blue-500': phaseType === 'cold',
         'text-red-500': phaseType === 'hot',
@@ -73,7 +75,7 @@ function stopTimer() {
       {{ phaseType }}
     </div>
 
-    <span class="text-center font-mono">
+    <span class="text-center font-mono text-4xl">
       {{ formattedCountdown }}
     </span>
 
