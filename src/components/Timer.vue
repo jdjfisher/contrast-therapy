@@ -14,10 +14,12 @@ let intervalId: number | null = null;
 
 const phase = ref(0);
 const countdown = ref(props.coldDuration);
+const elapsedTime = ref(0);
 const running = ref(false);
 
-// TODO: Display total session duration and progress
-// const sessionDuration = computed(() => (props.coldDuration + props.hotDuration) * props.cycles + props.coldDuration);
+const sessionDuration = computed(
+  () => (props.coldDuration + props.hotDuration) * props.cycles + props.coldDuration
+);
 
 const phaseType = computed(() => (phase.value % 2 === 0 ? 'cold' : 'hot'));
 
@@ -26,12 +28,15 @@ const formattedCountdown = computed(() => formatSeconds(countdown.value));
 function startTimer() {
   running.value = true;
   phase.value = 0;
+  elapsedTime.value = 0;
   countdown.value = props.coldDuration;
 
   // Higher pitch beep for the start of the session
   beep(400, 880);
 
   intervalId = setIntervalImmediate(() => {
+    elapsedTime.value += 1;
+
     if (running.value && countdown.value > 0) {
       countdown.value -= 1;
       return;
@@ -52,8 +57,6 @@ function startTimer() {
 
 function stopTimer() {
   running.value = false;
-  phase.value = 0;
-  countdown.value = props.coldDuration;
 
   if (intervalId) {
     clearInterval(intervalId);
@@ -78,9 +81,18 @@ function stopTimer() {
       {{ phaseType }}
     </div>
 
-    <span class="text-center font-mono text-4xl">
-      {{ formattedCountdown }}
-    </span>
+    <div class="grid text-center font-mono">
+      <span class="text-4xl">
+        {{ formattedCountdown }}
+      </span>
+
+      <span
+        class="text-sm text-gray-400"
+        :title="`Session Duration: ${formatSeconds(sessionDuration)}`"
+      >
+        {{ formatSeconds(elapsedTime) }}
+      </span>
+    </div>
 
     <div class="flex gap-4">
       <button
