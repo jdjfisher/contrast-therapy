@@ -69,7 +69,7 @@ function stopTimer() {
 </script>
 
 <template>
-  <div class="grid gap-8 rounded-lg border p-12 shadow">
+  <div class="grid gap-8">
     <div
       class="text-center text-6xl font-semibold capitalize transition-opacity duration-500"
       :class="{
@@ -94,9 +94,9 @@ function stopTimer() {
       </span>
     </div>
 
-    <div class="flex gap-4">
+    <div class="flex justify-center gap-4">
       <button
-        class="outlined cursor-pointer rounded-lg border border-blue-500 px-4 py-2 text-blue-500 shadow-md disabled:cursor-not-allowed disabled:opacity-50"
+        class="outlined cursor-pointer rounded-lg border border-blue-500 px-4 py-2 text-blue-500 shadow-md transition-colors hover:bg-blue-50 disabled:cursor-not-allowed disabled:opacity-50"
         :disabled="running"
         @click="startTimer"
       >
@@ -104,7 +104,7 @@ function stopTimer() {
       </button>
 
       <button
-        class="outlined cursor-pointer rounded-lg border border-red-500 px-4 py-2 text-red-500 shadow-md disabled:cursor-not-allowed disabled:opacity-50"
+        class="outlined cursor-pointer rounded-lg border border-red-500 px-4 py-2 text-red-500 shadow-md transition-colors hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50"
         :disabled="!running"
         @click="stopTimer"
       >
