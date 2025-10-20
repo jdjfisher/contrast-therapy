@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { formatSeconds, setIntervalImmediate } from '@/util';
+import { beep, formatSeconds, setIntervalImmediate } from '@/util';
 import { computed, ref } from 'vue';
 
 const props = defineProps<{
@@ -8,7 +8,7 @@ const props = defineProps<{
   cycles: number;
 }>();
 
-const INTERVAL_MS = 100; // Reduce for testing purposes
+const INTERVAL_MS = 1000; // Reduce for testing purposes
 
 let intervalId: number | null = null;
 
@@ -28,6 +28,9 @@ function startTimer() {
   phase.value = 0;
   countdown.value = props.coldDuration;
 
+  // Higher pitch beep for the start of the session
+  beep(400, 880);
+
   intervalId = setIntervalImmediate(() => {
     if (running.value && countdown.value > 0) {
       countdown.value -= 1;
@@ -36,6 +39,8 @@ function startTimer() {
 
     if (running.value && countdown.value === 0) {
       phase.value += 1;
+
+      beep(200, phaseType.value === 'cold' ? 660 : 740);
 
       if (phase.value <= props.cycles * 2) {
         countdown.value = phaseType.value === 'cold' ? props.coldDuration : props.hotDuration;
