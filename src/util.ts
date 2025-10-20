@@ -16,7 +16,7 @@ export function beep(
   volume: number = 1,
   type: OscillatorType = 'sine'
 ): void {
-  const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  const audioCtx = new AudioContext();
   const oscillator = audioCtx.createOscillator();
   const gainNode = audioCtx.createGain();
 
