@@ -40,12 +40,11 @@ function startTimer() {
     if (running.value && countdown.value === 0) {
       phase.value += 1;
 
-      beep(200, phaseType.value === 'cold' ? 660 : 740);
-
       if (phase.value <= props.cycles * 2) {
         countdown.value = phaseType.value === 'cold' ? props.coldDuration : props.hotDuration;
+        beep(200, phaseType.value === 'cold' ? 660 : 740);
       } else {
-        running.value = false; // End of session
+        stopTimer();
       }
     }
   }, INTERVAL_MS);
@@ -55,10 +54,14 @@ function stopTimer() {
   running.value = false;
   phase.value = 0;
   countdown.value = props.coldDuration;
+
   if (intervalId) {
     clearInterval(intervalId);
     intervalId = null;
   }
+
+  // Lower pitch beep for the end of the session
+  beep(600, 220);
 }
 </script>
 
