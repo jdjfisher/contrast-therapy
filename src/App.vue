@@ -31,5 +31,17 @@ const showSettings = ref(false);
         </transition>
       </div>
     </div>
+
+    <div class="group text-center text-xs text-gray-400 transition-colors hover:text-gray-600">
+      Built by
+      <a
+        href="https://github.com/jdjfisher/contrast-therapy"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="font-mono group-hover:underline"
+      >
+        jdjfisher
+      </a>
+    </div>
   </div>
 </template>
