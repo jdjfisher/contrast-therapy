@@ -28,11 +28,14 @@ function beepIfEnabled(frequency: number, duration: number) {
   }
 }
 
+function resetTimer() {
+  phase.value = 0;
+  countdown.value = props.coldDuration;
+  elapsedTime.value = 0;
+}
+
 function startTimer() {
   running.value = true;
-  phase.value = 0;
-  elapsedTime.value = 0;
-  countdown.value = props.coldDuration;
 
   // Higher pitch beep for the start of the session
   beepIfEnabled(400, 880);
@@ -84,7 +87,10 @@ function stopTimer() {
       {{ phaseType }}
     </div>
 
-    <div class="grid text-center font-mono">
+    <div
+      class="grid text-center font-mono transition-opacity"
+      :class="{ 'opacity-5': elapsedTime === 0 }"
+    >
       <span class="text-4xl">
         {{ formattedCountdown }}
       </span>
@@ -99,19 +105,19 @@ function stopTimer() {
 
     <div class="flex justify-center gap-4">
       <button
-        class="outlined cursor-pointer rounded-lg border border-blue-500 px-4 py-2 text-blue-500 shadow-md transition-colors hover:bg-blue-50 disabled:cursor-not-allowed disabled:opacity-50"
-        :disabled="running"
+        class="outlined w-24 cursor-pointer rounded-lg border border-blue-500 px-4 py-2 text-blue-500 shadow-md transition-colors hover:bg-blue-50 disabled:cursor-not-allowed disabled:opacity-50"
+        :disabled="running || elapsedTime >= sessionDuration"
         @click="startTimer"
       >
-        Start
+        {{ elapsedTime === 0 ? 'Start' : 'Resume' }}
       </button>
 
       <button
-        class="outlined cursor-pointer rounded-lg border border-red-500 px-4 py-2 text-red-500 shadow-md transition-colors hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50"
-        :disabled="!running"
-        @click="stopTimer"
+        class="outlined w-24 cursor-pointer rounded-lg border border-red-500 px-4 py-2 text-red-500 shadow-md transition-colors hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50"
+        :disabled="elapsedTime === 0"
+        @click="running ? stopTimer() : resetTimer()"
       >
-        Reset
+        {{ running ? 'Pause' : 'Reset' }}
       </button>
     </div>
   </div>
