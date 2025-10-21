@@ -4,8 +4,16 @@ import Timer from '@/components/Timer.vue';
 import Settings from '@/components/Settings.vue';
 import About from '@/components/About.vue';
 import { ref } from 'vue';
+import type { Settings as SettingsType } from './types';
 
 const panel = ref<'timer' | 'settings' | 'about'>('timer');
+
+const settings = ref<SettingsType>({
+  coldDuration: 60,
+  hotDuration: 120,
+  cycles: 5,
+  beepEnabled: true,
+});
 </script>
 
 <template>
@@ -45,8 +53,8 @@ const panel = ref<'timer' | 'settings' | 'about'>('timer');
 
       <div class="grid h-96 w-80 place-items-center rounded-lg border p-12 shadow">
         <transition name="fade" mode="out-in">
-          <Timer v-if="panel === 'timer'" :cold-duration="60" :hot-duration="120" :cycles="5" />
-          <Settings v-else-if="panel === 'settings'" />
+          <Timer v-if="panel === 'timer'" v-bind="settings" />
+          <Settings v-else-if="panel === 'settings'" v-model:settings="settings" />
           <About v-else />
         </transition>
       </div>

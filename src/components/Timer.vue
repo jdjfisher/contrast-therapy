@@ -1,12 +1,9 @@
 <script setup lang="ts">
+import type { Settings } from '@/types';
 import { beep, formatSeconds, setIntervalImmediate } from '@/util';
 import { computed, ref } from 'vue';
 
-const props = defineProps<{
-  coldDuration: number;
-  hotDuration: number;
-  cycles: number;
-}>();
+const props = defineProps<Settings>();
 
 const INTERVAL_MS = 1000; // Reduce for testing purposes
 
@@ -25,6 +22,12 @@ const phaseType = computed(() => (phase.value % 2 === 0 ? 'cold' : 'hot'));
 
 const formattedCountdown = computed(() => formatSeconds(countdown.value));
 
+function beepIfEnabled(frequency: number, duration: number) {
+  if (props.beepEnabled) {
+    beep(frequency, duration);
+  }
+}
+
 function startTimer() {
   running.value = true;
   phase.value = 0;
@@ -32,7 +35,7 @@ function startTimer() {
   countdown.value = props.coldDuration;
 
   // Higher pitch beep for the start of the session
-  beep(400, 880);
+  beepIfEnabled(400, 880);
 
   intervalId = setIntervalImmediate(() => {
     elapsedTime.value += 1;
@@ -47,7 +50,7 @@ function startTimer() {
 
       if (phase.value <= props.cycles * 2) {
         countdown.value = phaseType.value === 'cold' ? props.coldDuration : props.hotDuration;
-        beep(200, phaseType.value === 'cold' ? 660 : 740);
+        beepIfEnabled(200, phaseType.value === 'cold' ? 660 : 740);
       } else {
         stopTimer();
       }
@@ -64,7 +67,7 @@ function stopTimer() {
   }
 
   // Lower pitch beep for the end of the session
-  beep(600, 220);
+  beepIfEnabled(600, 220);
 }
 </script>
 
