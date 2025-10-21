@@ -51,7 +51,7 @@ const settings = ref<SettingsType>({
         </transition>
       </div>
 
-      <div class="grid h-96 w-80 place-items-center rounded-lg border p-12 shadow">
+      <div class="grid h-115 w-80 place-items-center rounded-lg border p-12 shadow">
         <transition name="fade" mode="out-in">
           <Timer v-if="panel === 'timer'" v-bind="settings" />
           <Settings v-else-if="panel === 'settings'" v-model:settings="settings" />

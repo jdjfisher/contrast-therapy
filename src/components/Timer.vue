@@ -77,7 +77,7 @@ function stopTimer() {
 <template>
   <div class="grid gap-8">
     <div
-      class="text-center text-6xl font-semibold capitalize transition-opacity duration-500"
+      class="text-center text-8xl font-semibold capitalize transition-opacity duration-500"
       :class="{
         'text-blue-500': phaseType === 'cold',
         'text-red-500': phaseType === 'hot',
@@ -95,10 +95,7 @@ function stopTimer() {
         {{ formattedCountdown }}
       </span>
 
-      <span
-        class="text-sm text-gray-400"
-        :title="`Session Duration: ${formatSeconds(sessionDuration)}`"
-      >
+      <span class="text-gray-400" :title="`Session Duration: ${formatSeconds(sessionDuration)}`">
         {{ formatSeconds(elapsedTime) }}
       </span>
     </div>
