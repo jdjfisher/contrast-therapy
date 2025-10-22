@@ -23,38 +23,47 @@ const sessionDuration = computed(
       </div>
 
       <div class="space-y-2">
-        <label for="coldDuration" class="block text-sm font-medium">Cold Duration (seconds)</label>
+        <label for="coldDuration" class="flex items-center justify-between text-sm font-medium">
+          Cold Duration <span class="font-mono">{{ formatSeconds(settings!.coldDuration) }}</span>
+        </label>
         <input
           id="coldDuration"
-          type="number"
+          type="range"
           v-model.number="settings!.coldDuration"
-          class="w-full rounded border px-2 py-1"
-          min="1"
-          placeholder="Cold Duration (seconds)"
+          class="w-full"
+          min="30"
+          max="360"
+          step="15"
         />
       </div>
 
       <div class="space-y-2">
-        <label for="hotDuration" class="block text-sm font-medium">Hot Duration (seconds)</label>
+        <label for="hotDuration" class="flex items-center justify-between text-sm font-medium">
+          Hot Duration <span class="font-mono">{{ formatSeconds(settings!.hotDuration) }}</span>
+        </label>
         <input
           id="hotDuration"
-          type="number"
+          type="range"
           v-model.number="settings!.hotDuration"
-          class="w-full rounded border px-2 py-1"
-          min="1"
-          placeholder="Hot Duration (seconds)"
+          class="w-full"
+          min="30"
+          max="360"
+          step="15"
         />
       </div>
 
       <div class="space-y-2">
-        <label for="cycles" class="block text-sm font-medium">Cycles</label>
+        <label for="cycles" class="flex items-center justify-between text-sm font-medium">
+          Cycles <span class="font-mono">{{ settings!.cycles }}</span>
+        </label>
         <input
           id="cycles"
-          type="number"
+          type="range"
           v-model.number="settings!.cycles"
-          class="w-full rounded border px-2 py-1"
+          class="w-full"
           min="1"
-          placeholder="Cycles"
+          max="10"
+          step="1"
         />
       </div>
     </div>
