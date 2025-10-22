@@ -6,6 +6,7 @@ import AboutPanel from '@/components/panels/AboutPanel.vue';
 import { ref } from 'vue';
 import type { Settings } from './types';
 import { useStorage } from '@/composables/storage';
+import Footer from '@/components/Footer.vue';
 
 const panel = ref<'timer' | 'settings' | 'about'>('timer');
 
@@ -63,16 +64,6 @@ const settings = useStorage<Settings>('settings-v1', {
       </div>
     </div>
 
-    <div class="group text-center text-xs text-gray-400 transition-colors hover:text-gray-600">
-      Built by
-      <a
-        href="https://github.com/jdjfisher/contrast-therapy"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="font-mono group-hover:underline"
-      >
-        jdjfisher
-      </a>
-    </div>
+    <Footer />
   </div>
 </template>
