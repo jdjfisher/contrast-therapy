@@ -27,5 +27,8 @@ jobs:
       - name: Formatting
         run: npx prettier src --check
 
+      - name: Linting
+        run: npx eslint .
+
       - name: Build
         run: npm run build
