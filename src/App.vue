@@ -5,10 +5,11 @@ import Settings from '@/components/Settings.vue';
 import About from '@/components/About.vue';
 import { ref } from 'vue';
 import type { Settings as SettingsType } from './types';
+import { useStorage } from '@/composables/storage';
 
 const panel = ref<'timer' | 'settings' | 'about'>('timer');
 
-const settings = ref<SettingsType>({
+const settings = useStorage<SettingsType>('settings-v1', {
   coldDuration: 60,
   hotDuration: 120,
   cycles: 5,
