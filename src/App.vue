@@ -1,15 +1,15 @@
 <script setup lang="ts">
 import '@/index.css';
-import Timer from '@/components/Timer.vue';
-import Settings from '@/components/Settings.vue';
-import About from '@/components/About.vue';
+import TimerPanel from '@/components/panels/TimerPanel.vue';
+import SettingsPanel from '@/components/panels/SettingsPanel.vue';
+import AboutPanel from '@/components/panels/AboutPanel.vue';
 import { ref } from 'vue';
-import type { Settings as SettingsType } from './types';
+import type { Settings } from './types';
 import { useStorage } from '@/composables/storage';
 
 const panel = ref<'timer' | 'settings' | 'about'>('timer');
 
-const settings = useStorage<SettingsType>('settings-v1', {
+const settings = useStorage<Settings>('settings-v1', {
   coldDuration: 60,
   hotDuration: 120,
   cycles: 5,
@@ -55,9 +55,9 @@ const settings = useStorage<SettingsType>('settings-v1', {
       <div class="grid h-115 w-80 place-items-center rounded-lg border p-12 shadow">
         <transition name="fade" mode="out-in">
           <KeepAlive>
-            <Timer v-if="panel === 'timer'" v-bind="settings" />
-            <Settings v-else-if="panel === 'settings'" v-model:settings="settings" />
-            <About v-else />
+            <TimerPanel v-if="panel === 'timer'" v-bind="settings" />
+            <SettingsPanel v-else-if="panel === 'settings'" v-model:settings="settings" />
+            <AboutPanel v-else />
           </KeepAlive>
         </transition>
       </div>
