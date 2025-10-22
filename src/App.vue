@@ -53,9 +53,11 @@ const settings = ref<SettingsType>({
 
       <div class="grid h-115 w-80 place-items-center rounded-lg border p-12 shadow">
         <transition name="fade" mode="out-in">
-          <Timer v-if="panel === 'timer'" v-bind="settings" />
-          <Settings v-else-if="panel === 'settings'" v-model:settings="settings" />
-          <About v-else />
+          <KeepAlive>
+            <Timer v-if="panel === 'timer'" v-bind="settings" />
+            <Settings v-else-if="panel === 'settings'" v-model:settings="settings" />
+            <About v-else />
+          </KeepAlive>
         </transition>
       </div>
     </div>
